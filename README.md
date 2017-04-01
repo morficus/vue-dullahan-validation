@@ -37,7 +37,7 @@ or
 
 They can be sync or async... but what ever they are they MUST return the following data structure:
 
-```json
+```
 {
     isValid: Boolean,
     errorMessage: String

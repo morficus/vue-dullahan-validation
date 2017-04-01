@@ -1,5 +1,13 @@
 import list from './list';
 
+/**
+ * Checks that at least one of the fields is not empty.
+ *
+ * @param {String | Object} ruleValue Rule configuration
+ * @param {String | Number | Array} fieldValue Attributes current value
+ * @param {Object} componentData All data attributes on the component
+ * @returns {{isValid: boolean, errorMessage: string}} Validation result object
+ */
 export default function or (ruleValue, fieldValue, componentData) {
     let isValid = false,
         isCompanionValid = false;
@@ -9,7 +17,10 @@ export default function or (ruleValue, fieldValue, componentData) {
         companionValue = componentData[companionFieldName],
         isValueList = list({}, fieldValue).isValid,
         isPartnerList = list({}, companionValue).isValid,
-        errorMessage = ruleValue.message || 'Does not meet the `max` rule.';
+        errorMessage = ruleValue.message || 'Does not meet the `or` rule.';
+
+
+    // TODO: need to handle the case of Objects
 
     // first check if the primary field is non-empty
     if (isValueList || typeof fieldValue === 'string') {

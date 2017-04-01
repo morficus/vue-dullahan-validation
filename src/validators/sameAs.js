@@ -1,8 +1,8 @@
 import list from './list';
 
 /**
- * Checks that the given value actually has a value.
- * In the case of lists, makes sure they are not empty
+ * Checks that the given value matches the value of the companion field.
+ * Applies to list s as well.
  *
  * @param  {String | Object} ruleValue Rule configuration
  * @param {String | Number | Array} dataValue Attributes current value

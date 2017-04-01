@@ -1,4 +1,3 @@
-//
 /**
  * Check that the value contains letter characters only, no numbers or special characters
  *

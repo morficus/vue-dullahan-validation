@@ -6,6 +6,7 @@ import list from './list';
  *
  * @param  {Boolean | Object} ruleValue Rule configuration
  * @param {String | Number | Array} dataValue Attributes current value
+ * @param {Object} componentData All data attributes on the component
  * @returns {{isValid: boolean, errorMessage: string}} Validation result object
  */
 export default function required (ruleValue, dataValue) {

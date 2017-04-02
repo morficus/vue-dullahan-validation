@@ -1,5 +1,5 @@
 {
-  "name": "vue-validator",
+  "name": "vue-dullahan-validation",
   "version": "0.0.1",
   "main": "dist/vue-validator.js",
   "description": "Model-based validation with no optinionated UI",

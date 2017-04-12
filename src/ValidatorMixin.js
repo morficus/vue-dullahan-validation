@@ -10,17 +10,18 @@ import or from './validators/or';
 
 import log from './logger';
 
-const validationObject = {},
-    initialValues = {},
+const initialValues = {},
     // ^ the two items above are "primed" during the `beforeCreate()` hook
 
     _validationObjectTemplate = {
         isDirty: false,
         isValid: true,
-        errors: []
-    },
+        isProcessing: false,
+        rules: {},
+        errors: new Set()
+    };
 
-    validators = {
+let validators = {
         required,
         min,
         max,
@@ -32,6 +33,7 @@ const validationObject = {},
         or
     };
 
+let customValidations = {};
 
 // TODO: this is VERY similar to the `sameAs()` validation... maybe it can be re-used here?
 /**
@@ -64,66 +66,23 @@ function checkIfDirty (currentValue, initialValue) {
     return isDirty;
 }
 
+
 // TODO: make it so you can use this with out being global
 export default {
+    data () {
+        return {
+            // because of the `$`, this will only be accesable via `this.$data.$validation`. so to make things
+            // convenient for the developer using the plugin... a computed property of the same name exposes this
+            // data property.
+            // ref: https://vuejs.org/v2/api/#data
+            $validation: {}
+        }
+
+    },
+
     computed: {
-
-        /**
-         * Full details around validation results for each individual attribute.
-         *
-         * @returns {Object}
-         */
         $validation () {
-            // this is the data structure that will hold the validation results for each attribute
-            const validationResults = Object.assign({}, validationObject);
-
-            // reset everything to valid and no error messages
-            Object.values(validationResults).forEach((result) => {
-                result.isValid = true;
-                result.errors = [];
-            });
-
-            // run through each attribute to be validated
-            Object.keys(validationResults).forEach((key) => {
-
-                const reservedWords = ['message', 'custom'],
-                    attributeName = key,
-                    attrValue = this[key], // this would cover both `data` and `computed` attributes
-                    initialValue = initialValues[key],
-                    applicableRules = this.$options.validation.rules[key];
-
-                // "dirty" means that the value been modified by the user. even if the old an new attributes values
-                // are the same... it is still considered to be "dirty" because it has been tampered with. so once
-                // you become dirty...there is no going back.
-                validationObject[attributeName].isDirty = (validationObject[attributeName].isDirty) || checkIfDirty(attrValue, initialValue),
-
-                    // this flag to indicate that a particular attribute is in the process of being validated.
-                    // kind of pointless in this context since this is a synchronous validation, but absolutely
-                    // needed for async validations.
-                    validationObject[attributeName].isProcessing = true;
-
-                // run all configured relevant rules against this current attribute but exclude the "reserved"
-                // attributes from the list of applicable rules to execute.
-                Object.keys(applicableRules)
-                    .filter((rule) => !reservedWords.includes(rule))
-                    .forEach((rule) =>  {
-
-                        // TODO: passing in `this` is  hack to pass the component `data` and `computed` attributes
-                        // TODO: at once
-                        // actually run the particular validation rule
-                        const ruleResult = validators[rule](applicableRules[rule], attrValue, this);
-
-                        if (!ruleResult.isValid) {
-                            validationObject[attributeName].isValid = ruleResult.isValid;
-                            validationObject[attributeName].errors.push(ruleResult.errorMessage);
-                        }
-                    });
-
-                // clear flag to indicate that processing is done.
-                validationObject[attributeName].isProcessing = false;
-            });
-
-            return validationResults;
+            return this.$data.$validation;
         },
 
         /**
@@ -133,6 +92,8 @@ export default {
          */
         $isValid () {
             // if anything with `isValid` = false... then the entire thing is invalid.
+            return true;
+            /*
             const hasInvalid = Object.keys(this.$validation).filter((key) => {
 
                 return this.$validation[key].isValid === false;
@@ -140,34 +101,38 @@ export default {
 
             // eslint-disable-next-line no-magic-numbers
             return hasInvalid.length === 0;
+            */
         }
     },
 
     beforeCreate () {
 
         // no `validation` property? nothing to do here
-        if (!this.$options.validation) {
+        if (!this.$options.validation || !this.$options.validation.rules) {
             const logMsg = 'You are attempting to use the Validator plugin with no validations configured.';
             log(this, logMsg, 'error');
 
             return;
         }
+    },
 
+    created () {
         // setup local references for the component/instance properties we care about
         const options = this.$options,
             rules = options.validation.rules || {},
-            componentData = Object.assign({}, options.data(), options.computed);
+            componentData = Object.assign({}, options.data(), options.computed),
+            validationResults = this.$data.$validation;
 
         // remove references to its self
         delete componentData['$isValid'];
         delete componentData['$validation'];
 
+        // combine custom validations with built-in validations
+        validators = Object.assign(validators, options.validation.validations);
 
-        let attrToValidate = Object.keys(rules);
-
-        // check that the attributes that need to be validated are present in the component
+        let attributesToValidate = Object.keys(rules);
         // eslint-disable-next-line one-var
-        const missingAttr = attrToValidate.filter((attr) => {
+        const missingAttr = attributesToValidate.filter((attr) => {
             return !componentData.hasOwnProperty(attr);
         });
 
@@ -177,24 +142,86 @@ export default {
 
             log(this,  logMsg, 'warn');
             // remove any validation configuration for data properties that are not present.
-            attrToValidate = attrToValidate.filter((attr) => {
+            attributesToValidate = attributesToValidate.filter((attr) => {
                 return !missingAttr.includes(attr);
             });
         }
 
-        // create the initial validation object and keep a copy of their starting value
-        attrToValidate.forEach((attr) => {
-            validationObject[attr] = Object.assign({}, _validationObjectTemplate);
+        attributesToValidate.forEach((attribute) => {
 
-
-            if (typeof componentData[attr] === 'function') {
+            // keep a history of their initial value, used to initially determine the dirtinesss" of an attribute
+            if (typeof componentData[attribute] === 'function') {
                 // computed properties need to be treated as functions
-                initialValues[attr] = componentData[attr]();
+                initialValues[attribute] = componentData[attribute]();
             } else {
-                initialValues[attr] = componentData[attr];
+                initialValues[attribute] = componentData[attribute];
             }
 
-        });
+            // setup the initial validation result structure for each attribute
+            // th JSON-stringify-parse thing is a hack to make a deep-copy
+            this.$set(validationResults, attribute, JSON.parse(JSON.stringify(_validationObjectTemplate)));
 
-    }
+            const watcherOptions = {
+                immediate: true
+            };
+
+            // when validating objects, setup a deep watching
+            // ref: https://vuejs.org/v2/api/#vm-watch
+            if (componentData[attribute] instanceof Object) {
+                watcherOptions.deep = true;
+            }
+
+            this.$watch(attribute, async function (newValue, oldValue) {
+                const result = validationResults[attribute],
+                    initialValue = initialValues[attribute],
+                    applicableRules = rules[attribute],
+                    ruleNames = Object.keys(applicableRules);
+
+                result.isValid = true;
+                result.errors = new Set();
+
+
+                // "dirty" means that the value been modified by the user. even if the old an new attributes values
+                // are the same... it is still considered to be "dirty" because it has been tampered with. so once
+                // you become dirty...there is no going back.
+                result.isDirty = (result.isDirty) || checkIfDirty(newValue, initialValue);
+
+                // this flag to indicate that a particular attribute is in the process of being validated.
+                // kind of pointless in this context since this is a synchronous validation, but absolutely
+                // needed for async validations.
+                result.isProcessing = true;
+
+                // actually run all the rules.
+                // we wait for all of them to be done so we can properly set `isProcessing`.
+                // we also assume that they are sync... since we can not predict what users will do in custom validators
+                let allResults = await Promise.all(ruleNames.map(async function (rule) {
+
+                    const ruleValue = applicableRules[rule],
+                        res = await validators[rule](ruleValue, newValue, this);
+
+                    result.rules[rule] = res.isValid;
+
+                    if (!res.isValid) {
+                        result.isValid = res.isValid;
+                        result.errors.add(res.errorMessage);
+                    }
+
+                    return res;
+                }, this));
+
+
+                // if any of the resultsdid not pass... mark everything as invalid
+                const failureCount = allResults.filter((r) => {return !r.isValid});
+                result.isValid = failureCount.length === 0;
+
+
+                result.isProcessing = false;
+
+
+
+            }, watcherOptions);
+
+        }, this);
+    },
+
 };

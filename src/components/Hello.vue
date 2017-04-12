@@ -1,5 +1,6 @@
 <template>
     <form>
+
         <label>
             Name:
             <input type="text" v-model.trim="name" />
@@ -66,7 +67,9 @@
         </label>
 
         <!-- TOOD: why is this not updating right away? -->
-        <pre>{{$validation}}</pre>
+        <div style="border: 1px solid red;">
+            <pre>{{$validation}}</pre>
+        </div>
 
     </form>
 </template>
@@ -81,12 +84,14 @@
         mixins: [validationMixin],
         validation: {
             rules: {
-                dog: {
-                  required: true
+                mine: {}, yours: {},
+                doubleAge: {
+                    numeric: true
                 },
                 password: {
                     sameAs: 'passwordConfirm',
-                    required: true
+                    required: true,
+                    myTest: true
                 },
                 name: {
                     required: true,
@@ -113,26 +118,16 @@
                     sameAs: 'colors2'
                 }
             },
-            validators: {
-                myValidator () {
-                    return new Promise((resolve) => {
-                        setTimeout(() => {
-                            return resolve({
-                                isValid: false,
-                                msg: 'error'
-                            });
-                        }, ONE_SECOND);
+            validations: {
+                myTest (ruleValue, dataValue, componentData) {
+                    return new Promise(function (resolve, reject) {
+
+                        setTimeout(function () {
+                            console.log('times up!');
+                            resolve({isValid: false, errorMessage: 'my customer msg'});
+                        }, 5000)
                     });
-                },
-                myOtherValidator () {
-                    return new Promise((resolve) => {
-                        setTimeout(() => {
-                            return resolve({
-                                isValid: false,
-                                msg: 'more errors'
-                            });
-                        }, TWO_SECONDS);
-                    });
+
                 }
             }
         },
@@ -148,9 +143,23 @@
             };
         },
 
+        watch: {
+            async name () {
+                const that = this;
+                await function () {
+                    let x = async function () {
+                        await setTimeout(function () {
+                            console.log('yes?');
+                            that.mine = 'huh...?';
+                        }, 2000);
+                    }
+                }
+            }
+        },
+
         computed: {
-            dog () {
-                return `${this.name} - dog`;
+            doubleAge () {
+                return this.age * 2;
             }
         }
     };

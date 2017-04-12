@@ -49,11 +49,11 @@ They can be sync or async... but what ever they are they MUST return the followi
 }
 ```
 
+If your validator is async or triggers network requests.... it is HIGHLY recommended that you denounce your function.
+
 ## Road Map
 (in no particular order)
 
-* [ ] Support for custom validators
-* [ ] Support for async validation
-* [ ] Support for nested fields
+* [ ] fix `sameAs` rule
 * [ ] i18n and l10n support
 * [ ] Vuex support w/o using `mapGetters()`

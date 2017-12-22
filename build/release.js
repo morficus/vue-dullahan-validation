@@ -1,7 +1,11 @@
 const fs =          require('fs'),
     rollup =        require('rollup'),
     babel =         require('rollup-plugin-babel'),
-    package =       require('../package.json');
+    package =       require('../package.json'),
+    uglify =        require('rollup-plugin-uglify'),
+    minify =        require('uglify-js').minify;
+
+
 
 rollup.rollup({
     entry: './src/ValidatorEntryPoint.js',
@@ -10,6 +14,7 @@ rollup.rollup({
             babelrc: false,
             presets: ['es2015-loose-rollup'],
             plugins: ['external-helpers'],
+            exclude: 'node_modules/**',
             comments: false
         })
     ]
@@ -19,6 +24,7 @@ rollup.rollup({
         format: 'es',
         moduleName: 'vue-validator',
         export: 'default'
+
     }).code, bundle);
 })
 .catch(function (error) {
@@ -26,6 +32,7 @@ rollup.rollup({
 });
 
 function write(dest, code, bundle) {
+    console.log(code);
     return new Promise(function (resolve, reject) {
         fs.writeFile(dest, code, function (err) {
             if (err) return reject(err);

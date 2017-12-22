@@ -1,3 +1,4 @@
+// @flow
 /**
  * Helper function to determine a friendly string to represent the given Vue instance
  *

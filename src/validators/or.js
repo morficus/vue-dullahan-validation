@@ -25,14 +25,14 @@ export default function or (ruleValue, fieldValue, componentData) {
     // first check if the primary field is non-empty
     if (isValueList || typeof fieldValue === 'string') {
         isValid = fieldValue.length > empty;
-    } else if (fieldValue !== null || fieldValue !== undefined) {
+    } else if (fieldValue !== null && fieldValue !== undefined) {
         isValid = true;
     }
 
     // now do the same thing for the companion field
     if (isPartnerList || typeof companionValue === 'string') {
         isCompanionValid = companionValue.length > empty;
-    } else if (companionValue !== null || companionValue !== undefined) {
+    } else if (companionValue !== null && companionValue !== undefined) {
         isCompanionValid = true;
     }
 

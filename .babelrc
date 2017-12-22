@@ -1,5 +1,11 @@
 {
-    "presets": ["stage-3", "es2015"],
-    "plugins": ["transform-runtime", "external-helpers"],
-    "comments": false
+    "presets": [
+        ["env", {
+            "modules": false
+        }
+        ],
+        "@ava/stage-4",
+        "@ava/transform-test-files"
+    ],
+    "plugins": ["transform-runtime", "external-helpers"]
 }

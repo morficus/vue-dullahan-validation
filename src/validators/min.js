@@ -19,7 +19,7 @@ export default function min (ruleValue, dataValue) {
     } else if (typeof dataValue === 'number') {
         isValid =  dataValue >= value;
     } else {
-        // TODO: show a warning about invalid rule and type?
+        isValid = false;
     }
 
 

@@ -8,7 +8,7 @@ import list from './list';
  * @param {String | Number | Array} dataValue Attributes current value
  * @returns {{isValid: boolean, errorMessage: string}} Validation result object
  */
-export function sameAs (ruleValue, dataValue, componentData) {
+export default function sameAs (ruleValue, dataValue, componentData) {
     const value     = ruleValue.value || ruleValue,
         isValueList = list({}, dataValue).isValid,
 
@@ -50,9 +50,11 @@ export function compareArray (dataValue, partnerValue) {
     const missMatchedValues = dataValue.filter((val, index) => {
         let missMatchVal;
 
-        if (Array.isArray(val) || Array.isArray(partnerValue[index])) {
+        if (Array.isArray(val) || Array.isArray(partnerValue[index]) ) {
             // if values at the given index are arrays... go in and check those too
-            missMatchVal = !compareArray(val, partnerValue[index]);
+            // because the "partner value" could be shorter than the value its self... we set a fallback value of empty
+            // array.
+            missMatchVal = !compareArray(val, partnerValue[index] || []);
         }else if (val instanceof Object || partnerValue[index] instanceof Object) {
             missMatchVal = !compareObject(val, partnerValue[index]);
         } else {

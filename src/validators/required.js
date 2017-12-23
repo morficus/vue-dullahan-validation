@@ -5,7 +5,7 @@ import list from './list';
  * In the case of lists, makes sure they are not empty
  *
  * @param  {Boolean | Object} ruleValue Rule configuration
- * @param {String | Number | Array | Boolean, Object} dataValue Attributes current value
+ * @param {String | Number | Array | Boolean | Object} dataValue Attributes current value
  * @returns {{isValid: boolean, errorMessage: string}} Validation result object
  */
 export default function required (ruleValue, dataValue) {
@@ -21,9 +21,9 @@ export default function required (ruleValue, dataValue) {
     } else if (typeof dataValue === 'string' || isList) {
         isValid = dataValue.length > empty;
     } else if (dataValue instanceof Object) {
-        isValid = Object.keys(dataValue).length > empty
-            && Object.values(dataValue)
+        isValid = Object.keys(dataValue).length > empty  && Object.values(dataValue)
                 // filter out falsy values (like empty strings, null, etc)
+                // eslint-disable-next-line arrow-parens
                 .filter(val => val)
                 .length > empty;
     }

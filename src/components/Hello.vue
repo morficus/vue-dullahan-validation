@@ -137,6 +137,8 @@
                 password: '',
                 passwordConfirm: '',
                 name: '',
+                mine: '',
+                yours: '',
                 age: 8,
                 colors: [],
                 colors2: []

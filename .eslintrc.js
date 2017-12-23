@@ -153,7 +153,7 @@ module.exports = {
     // the following items are not allowed as variable or function
     "id-blacklist": [1, "e", "cb"],
     // minimum length for var and func names
-    "id-length": [2, {"min": 3, "properties": "never", "exceptions": ["i", "j", "k", "_", "vm", "h", "el"] }],
+    "id-length": [2, {"min": 3, "properties": "never", "exceptions": ["i", "j", "k", "_", "h", "el", "or"] }],
     // consistent 4-spaces for indentation
     "indent": [1, 4, {"SwitchCase": 1, "VariableDeclarator": 1}],
     // for object literals, no space before colon and at least 1 space after

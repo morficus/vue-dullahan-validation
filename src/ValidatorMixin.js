@@ -4,10 +4,6 @@ import log from './logger';
 import doCreate from './create';
 
 
-let customValidations = {};
-
-
-
 // TODO: make it so you can use this with out being global
 export default {
     data () {
@@ -17,14 +13,13 @@ export default {
             // data property.
             // ref: https://vuejs.org/v2/api/#data
             $validation: {}
-        }
+        };
 
     },
 
     computed: {
 
         $validations () {
-            log(this, 'testing', 'error');
             return this.$data.$validation;
         },
 
@@ -36,7 +31,7 @@ export default {
          */
         $isValid () {
             // if anything with `isValid` = false... then the entire thing is invalid.
-            const hasInvalid = Object.keys(this.$validation).filter((key) => {
+            const hasInvalid = Object.keys(this.$validations).filter((key) => {
 
                 return this.$data.$validation[key].isValid === false;
             });
@@ -57,6 +52,6 @@ export default {
         }
     },
 
-    created: doCreate,
+    created: doCreate
 
 };

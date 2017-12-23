@@ -7,5 +7,5 @@ import App from './DemoApp';
 new Vue({
     el: '#app',
     // eslint-disable-next-line arrow-body-style
-    render: (h) => h(App)
+    render: h => h(App)
 });

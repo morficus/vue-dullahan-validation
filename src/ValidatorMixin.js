@@ -1,10 +1,7 @@
-// @flow
-
-import log from './logger';
-import doCreate from './create';
+import log from './helpers/logger';
+import setupValidations from './setupValidations';
 
 
-// TODO: make it so you can use this with out being global
 export default {
     data () {
         return {
@@ -31,27 +28,21 @@ export default {
          */
         $isValid () {
             // if anything with `isValid` = false... then the entire thing is invalid.
-            const hasInvalid = Object.keys(this.$validations).filter((key) => {
+            const validationResults = Object.values(this.$validations).map(validation => validation.isValid);
 
-                return this.$data.$validation[key].isValid === false;
-            });
-
-            // eslint-disable-next-line no-magic-numbers
-            return hasInvalid.length === 0;
+            return !validationResults.includes(false);
         }
     },
 
     beforeCreate () {
 
         // no `validation` property? nothing to do here
-        if (!this.$options.validation || !this.$options.validation.rules) {
+        if (!this.$options.validation || !this.$options.validation.customValidations) {
             const logMsg = 'You are attempting to use the Validator plugin with no validations configured.';
             log(this, logMsg, 'error');
-
-            return;
         }
     },
 
-    created: doCreate
+    created: setupValidations
 
 };

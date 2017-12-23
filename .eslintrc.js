@@ -144,8 +144,6 @@ module.exports = {
     "comma-style": 2,
     // no spaces around computer properties
     "computed-property-spacing": 2,
-    // use `that` when referring to `this`
-    "consistent-this": 2,
     // end all files with a new-line (typically taken care of via .editorconfig file)
     "eol-last": 2,
     // all functions should have a name
@@ -153,7 +151,7 @@ module.exports = {
     // the following items are not allowed as variable or function
     "id-blacklist": [1, "e", "cb"],
     // minimum length for var and func names
-    "id-length": [2, {"min": 3, "properties": "never", "exceptions": ["i", "j", "k", "_", "h", "el", "or"] }],
+    "id-length": [2, {"min": 3, "properties": "never", "exceptions": ["i", "j", "k", "_", "h", "el", "vm", "or"] }],
     // consistent 4-spaces for indentation
     "indent": [1, 4, {"SwitchCase": 1, "VariableDeclarator": 1}],
     // for object literals, no space before colon and at least 1 space after
@@ -243,7 +241,7 @@ module.exports = {
 
     /** ES2015 Specifics */
     // always use parans around arrow function arguments
-    "arrow-parens": [2, "always"],
+    "arrow-parens": [2, "as-needed"],
     // enforce space before and after the =>
     "arrow-spacing": [1, { "before": true, "after": true }],
     // warn on potentially confusing arrow functions, unless the arguments re wrapped in a parens

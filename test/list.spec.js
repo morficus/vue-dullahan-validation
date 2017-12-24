@@ -1,8 +1,6 @@
 import list from '../src/validators/list';
 import test from 'ava';
 
-console.log('List validation');
-
 test('should match when given an Array', t => {
     const validation = list({}, ['A', 'B', 'C']);
 

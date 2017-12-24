@@ -1,11 +1,31 @@
 {
     "presets": [
-        ["env", {
-            "modules": false
-        }
+        [
+            "env",
+            {
+                "modules": false,
+                "targets": {
+                    "browsers": ["last 2 versions"]
+                }
+            }
         ],
-        "@ava/stage-4",
-        "@ava/transform-test-files"
+        "stage-2"
     ],
-    "plugins": ["transform-runtime", "external-helpers"]
+    "plugins": ["external-helpers",
+        [
+            "transform-runtime",
+            {
+                "polyfill": false,
+                "regenerator": true
+            }
+        ]],
+    "comments": false,
+    "env": {
+        "test": {
+            "presets": [
+                "@ava/stage-4",
+                "@ava/transform-test-files"
+            ]
+        }
+    }
 }

@@ -1,8 +1,6 @@
 import numeric from '../src/validators/numeric';
 import test from 'ava';
 
-console.log('Numeric validation');
-
 test('should NOT match when given a string of letters', t => {
     const validation = numeric({}, 'ABcdEFg');
 

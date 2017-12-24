@@ -1,8 +1,6 @@
 import alphanumeric from '../src/validators/alphanumeric';
 import test from 'ava';
 
-console.log('Alphanumeric validation');
-
 test('should match when given a string of letters', t => {
     const validation = alphanumeric({}, 'ABcdEFg');
 

@@ -1,8 +1,6 @@
 import required from '../src/validators/required';
 import test from 'ava';
 
-console.log('Required validation');
-
 test('should NOT match when given null', t => {
     const validation = required(true, null);
 

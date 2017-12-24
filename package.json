@@ -9,7 +9,7 @@
     "dev": "node build/dev-server.js",
     "build": "node build/build.js",
     "unit": "karma start test/unit/karma.conf.js --single-run",
-    "test": "ava",
+    "test": "NODE_ENV=test ava",
     "lint": "eslint --fix --ext .js,.vue src test",
     "parcel": "parcel build src/ValidatorEntryPoint.js -d dist/",
     "rollup": "rollup -c"
@@ -20,12 +20,10 @@
   "devDependencies": {
     "autoprefixer": "^6.4.0",
     "ava": "^0.24.0",
-    "babel-core": "^6.26.0",
     "babel-eslint": "^7.2.3",
-    "babel-loader": "^6.0.0",
     "babel-plugin-external-helpers": "^6.18.0",
     "babel-plugin-transform-runtime": "^6.0.0",
-    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-env": "^1.6.1",
     "babel-preset-es2015-loose-rollup": "^7.0.0",
     "babel-preset-stage-2": "^6.24.1",
     "babel-register": "^6.26.0",
@@ -68,6 +66,7 @@
     "phantomjs-prebuilt": "^2.1.16",
     "rollup": "^0.41.6",
     "rollup-plugin-babel": "^2.7.1",
+    "rollup-plugin-commonjs": "^8.2.6",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-uglify": "^1.0.2",
     "shelljs": "^0.7.8",
@@ -83,11 +82,9 @@
     "webpack-hot-middleware": "^2.21.0",
     "webpack-merge": "^0.14.1"
   },
-  "dependencies": {
-    "babel-preset-env": "^1.6.1",
-    "uglify-js": "^2.8.29"
-  },
+  "dependencies": {},
   "ava": {
+    "concurrency": 10,
     "require": [
       "babel-register"
     ],

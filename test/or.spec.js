@@ -1,8 +1,6 @@
 import or from '../src/validators/or';
 import test from 'ava';
 
-console.log('Or validation');
-
 test('should match when both values are Strings', t => {
     const data = {
             sampleValue: 'hello',

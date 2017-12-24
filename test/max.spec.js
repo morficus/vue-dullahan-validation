@@ -1,8 +1,6 @@
 import max from '../src/validators/max';
 import test from 'ava';
 
-console.log('Max validation');
-
 // test numeric values
 test('should pass if given number is lower than the given max', t => {
     const validation = max(100, 99);

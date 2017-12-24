@@ -1,8 +1,6 @@
 import alphabetic from '../src/validators/alphabetic';
 import test from 'ava';
 
-console.log('Alphabetic validation');
-
 test('should match when given a string of letters', t => {
     const validation = alphabetic({}, 'ABcdEFg');
     t.true(validation.isValid);

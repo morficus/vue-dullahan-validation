@@ -1,8 +1,6 @@
 import min from '../src/validators/min';
 import test from 'ava';
 
-console.log('Min validation');
-
 // test numeric values
 test('should not pass if given a number that is lower than the given min', t => {
     const validation = min(100, 99);

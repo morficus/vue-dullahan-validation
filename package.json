@@ -1,26 +1,12 @@
 {
   "name": "vue-dullahan-validation",
-  "version": "0.0.3",
-  "main": "dist/vue-dullahan-validation.js",
+  "version": "0.0.4",
   "description": "Model-based validation with non-optinionated UI",
-  "author": "Maurice Williams <morficus@gmail.com>",
-  "private": false,
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/morficus/vue-dullahan-validation.git"
+  "main": "dist/vue-dullahan-validation.js",
+  "directories": {
+    "test": "test"
   },
-  "scripts": {
-    "dev": "node build/dev-server.js",
-    "build": "node build/build.js",
-    "unit": "karma start test/unit/karma.conf.js --single-run",
-    "test": "NODE_ENV=test ava",
-    "lint": "eslint --fix --ext .js,.vue src test",
-    "parcel": "parcel build src/ValidatorEntryPoint.js -d dist/",
-    "rollup": "rollup -c"
-  },
-  "peerDependencies": {
-    "vue": "^2.2.6"
-  },
+  "dependencies": {},
   "devDependencies": {
     "autoprefixer": "^6.4.0",
     "ava": "^0.24.0",
@@ -86,7 +72,32 @@
     "webpack-hot-middleware": "^2.21.0",
     "webpack-merge": "^0.14.1"
   },
-  "dependencies": {},
+  "scripts": {
+    "dev": "node build/dev-server.js",
+    "build": "node build/build.js",
+    "unit": "karma start test/unit/karma.conf.js --single-run",
+    "test": "NODE_ENV=test ava",
+    "lint": "eslint --fix --ext .js,.vue src test",
+    "parcel": "parcel build src/ValidatorEntryPoint.js -d dist/",
+    "rollup": "rollup -c"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/morficus/vue-dullahan-validation.git"
+  },
+  "keywords": [
+    "vue",
+    "validation",
+    "form",
+    "headless",
+    "dullahan"
+  ],
+  "author": "Maurice Williams <morficus@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/morficus/vue-dullahan-validation/issues"
+  },
+  "homepage": "https://github.com/morficus/vue-dullahan-validation#readme",
   "ava": {
     "concurrency": 10,
     "require": [

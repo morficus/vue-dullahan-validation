@@ -1,0 +1,7 @@
+{
+    "include": [
+      "src/**/*.js"
+    ],
+    "cache": true,
+    "all": true
+}

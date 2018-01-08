@@ -1,6 +1,6 @@
 {
   "name": "vue-dullahan-validation",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Model-based validation with non-optinionated UI",
   "main": "dist/vue-dullahan-validation.js",
   "directories": {
@@ -87,7 +87,14 @@
   },
   "keywords": [
     "vue",
+    "vuejs",
+    "vue-mixin",
     "validation",
+    "validations",
+    "validator",
+    "validation-library",
+    "model-validation",
+    "form-validation",
     "form",
     "headless",
     "dullahan"

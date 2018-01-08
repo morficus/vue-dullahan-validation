@@ -7,12 +7,12 @@ import commonjs from 'rollup-plugin-commonjs';
 
 export default {
     // moduleName: 'validator',
-    input: 'src/ValidatorEntryPoint.js',
+    input: 'src/ValidatorMixin.js',
     output: {
         file: 'dist/vue-dullahan-validation.js',
         format: 'umd',
         name: 'VueDullahan',
-        exports: 'named'
+        exports: 'default'
     },
     sourcemap: true,
     plugins: [

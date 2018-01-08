@@ -1,7 +1,7 @@
 {
   "name": "vue-dullahan-validation",
-  "version": "0.0.2",
-  "main": "dist/vue-validator.js",
+  "version": "0.0.3",
+  "main": "dist/vue-dullahan-validation.js",
   "description": "Model-based validation with non-optinionated UI",
   "author": "Maurice Williams <morficus@gmail.com>",
   "private": false,

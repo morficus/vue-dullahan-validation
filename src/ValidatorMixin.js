@@ -2,7 +2,7 @@ import log from './helpers/logger';
 import setupValidations from './setupValidations';
 
 
-export default {
+export default  {
     data () {
         return {
             // because of the `$`, this will only be accesable via `this.$data.$validation`. so to make things
@@ -37,7 +37,7 @@ export default {
     beforeCreate () {
 
         // no `validation` property? nothing to do here
-        if (!this.$options.validation || !this.$options.validation.customValidations) {
+        if (!this.$options.validation && !this.$options.validation.rules) {
             const logMsg = 'You are attempting to use the Validator plugin with no validations configured.';
             log(this, logMsg, 'error');
         }

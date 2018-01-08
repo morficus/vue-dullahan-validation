@@ -158,6 +158,8 @@ export default function setupValidations () {
             const failureCount = allResults.filter(result => !result.isValid);
             result.isValid = !failureCount.length;
 
+            result.errors = Array.from(result.errors);
+
 
             result.isProcessing = false;
 

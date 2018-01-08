@@ -9,7 +9,7 @@ export default {
     // moduleName: 'validator',
     input: 'src/ValidatorEntryPoint.js',
     output: {
-        file: 'dist/bundle.js',
+        file: 'dist/vue-dullahan-validation.js',
         format: 'umd',
         name: 'VueDullahan',
         exports: 'named'

@@ -1,10 +1,14 @@
 {
   "name": "vue-dullahan-validation",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "dist/vue-validator.js",
-  "description": "Model-based validation with no optinionated UI",
+  "description": "Model-based validation with non-optinionated UI",
   "author": "Maurice Williams <morficus@gmail.com>",
   "private": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/morficus/vue-dullahan-validation.git"
+  },
   "scripts": {
     "dev": "node build/dev-server.js",
     "build": "node build/build.js",

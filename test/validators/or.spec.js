@@ -1,4 +1,4 @@
-import or from '../src/validators/or';
+import or from '../../src/validators/or';
 import test from 'ava';
 
 test('should match when both values are Strings', t => {

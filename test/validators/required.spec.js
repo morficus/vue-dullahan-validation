@@ -1,4 +1,4 @@
-import required from '../src/validators/required';
+import required from '../../src/validators/required';
 import test from 'ava';
 
 test('should NOT match when given null', t => {

@@ -1,4 +1,4 @@
-import sameAs from '../src/validators/sameAs';
+import sameAs from '../../src/validators/sameAs';
 import test from 'ava';
 
 test('should match two identical strings', t => {

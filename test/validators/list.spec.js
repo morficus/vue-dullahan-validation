@@ -1,4 +1,4 @@
-import list from '../src/validators/list';
+import list from '../../src/validators/list';
 import test from 'ava';
 
 test('should match when given an Array', t => {

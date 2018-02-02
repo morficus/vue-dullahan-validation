@@ -1,4 +1,4 @@
-import alphanumeric from '../src/validators/alphanumeric';
+import alphanumeric from '../../src/validators/alphanumeric';
 import test from 'ava';
 
 test('should match when given a string of letters', t => {

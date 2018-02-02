@@ -1,4 +1,4 @@
-import min from '../src/validators/min';
+import min from '../../src/validators/min';
 import test from 'ava';
 
 // test numeric values

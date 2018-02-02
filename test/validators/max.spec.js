@@ -1,4 +1,4 @@
-import max from '../src/validators/max';
+import max from '../../src/validators/max';
 import test from 'ava';
 
 // test numeric values
